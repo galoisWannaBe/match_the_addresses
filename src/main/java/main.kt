@@ -167,7 +167,7 @@ fun printOutputsAddressMatches(fileName: String, title: String, theList: ArrayLi
     try{
         csvWriter.writeNext(arrayOf(title))
         for (obj in theList){
-            csvWriter.writeNext(arrayOf(title))
+            csvWriter.writeNext(arrayOf(obj.address))
             for (indices in obj.matches){
                 csvWriter.writeNext(arrayOf(" ", indices))
             }
