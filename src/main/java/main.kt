@@ -79,7 +79,7 @@ fun main() {
     //the magic ended; this is the output
     //test.printMatchedAddresses(addressTables)
 
-    //test.printUnmatchedAddresses(unmatchedAddresses)
+    test.printUnmatchedAddresses(unmatchedAddresses)
 
     //test.printIndividualMultiMatches(fuckingRetardInputTracked)
 
@@ -95,6 +95,9 @@ fun main() {
     printOutputStringList("FilteredFromMaster", "Filtered From Master", filteredOutMaster)
     printOutputsTableRows("MatchesPerMasterList", "Matches per Master List", addressTables)
     printOutputsAddressMatches("MatchesPerInputs", "Matches per User Inputs", fuckingRetardInputTracked)
+    printActiveAddresses("ActiveAddresses.csv","Active Addresses",addressTables)
+    printOutputStringList("UnmatchedAddresses.csv", "Unmatched Addresses", unmatchedAddresses)
+    println("There are ${unmatchedAddresses.size} unmatched addresses")
 
     println("There are $duplicates duplicates")
 
@@ -173,6 +176,26 @@ fun printOutputsAddressMatches(fileName: String, title: String, theList: ArrayLi
             }
         }
     } catch (e:IOException){
+        e.printStackTrace()
+    }
+}
+fun printActiveAddresses(fileName: String, title: String, theList:ArrayList<TableRow>){
+    var structuredoutputs = File("StructuredOutputs")
+
+    if(!structuredoutputs.exists()){
+        structuredoutputs.mkdir()
+    }
+    var fileWriter = FileWriter(File(structuredoutputs, fileName))
+    var csvWriter = CSVWriter(fileWriter)
+
+    try {
+        csvWriter.writeNext(arrayOf(title))
+        for (obj in theList){
+            if (obj.IsActive){
+                csvWriter.writeNext(arrayOf(obj.address))
+            }
+        }
+    }catch (e: IOException){
         e.printStackTrace()
     }
 }
